@@ -34,12 +34,20 @@ while running:
                 moving_right = True
             if event.key == pygame.K_a:
                 moving_left = True
+            if event.key == pygame.K_w:
+                if air_timer < 6:
+                    player_y_momentum -= 5
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 moving_right = False
             if event.key == pygame.K_a:
                 moving_left = False
+    draw = framework.Draw
+    draw.rect(draw, surface, DarkSlateGray, (0,0,display_manager.width, display_manager.height))
+    map.map_loader(surface)
+
     player_movement = [0,0]
+    surface.blit(player,player_rect)
     if moving_right:
         player_movement[0] +=2
     if moving_left:
@@ -48,12 +56,15 @@ while running:
     player_y_momentum +=0.2
     if player_y_momentum >= player_y_momentum_max:
         player_y_momentum = player_y_momentum_max
+    player_rect, collisions = framework.Move(player_rect,player_movement, map.tile_rects).player_motion() # player's collision detection
+    if collisions['bottom']:    
+        player_y_momentum = 0
+        air_timer = 0
+    else:
+        air_timer +=1
+    if collisions['top']:
+        player_y_momentum = 0
 
-    draw = framework.Draw
-    draw.rect(draw, surface, DarkSlateGray, (0,0,display_manager.width, display_manager.height))
-    map.map_loader(surface)
-    player_rect, collisions = framework.Move(player_rect,player_movement, map.tile_rects).player_motion()
-    surface.blit(player,player_rect)
 
     surf = pygame.transform.scale(surface,(display_manager.width, display_manager.height))
     display.blit(surf,(0,0))
