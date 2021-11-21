@@ -1,5 +1,4 @@
 import framework, pygame
-color = framework.Color.color
 pygame.init()
 clock = pygame.time.Clock()
     # Window things and for the player's camera
@@ -31,7 +30,16 @@ player_action = 'idle'
 player_frame = 0
 player_flip = False
     # colors
-DarkSlateGray = framework.Color.custom_color((47,79,79))
+color = {
+    'RED'           : (255,0,0),
+    'GREEN'         : (0,255,0),
+    'BLUE'          : (0,0,255),
+    'WHITE'         : (255,255,255),
+    'BLACK'         : (0,0,0),
+    'ORANGE'        : (255,125,0),
+    'MAGENDA'       : (255,0,255),
+    'DarkSlateGray' : (47,79,79)
+}
     # Discord things
 RPC = framework.discord_rich_presence(909845043798499379).RPC()
 try:
@@ -67,13 +75,13 @@ while running:
                 moving_right = False
             if event.key == pygame.K_a:
                 moving_left = False
-    true_scroll[0] += (player_rect.x-true_scroll[0]-display_manager.width//4)/20
+    true_scroll[0] += (player_rect.x-true_scroll[0]-display_manager.width//4)/15
     true_scroll[1] += (player_rect.y-true_scroll[1]-display_manager.height//2//2+23)/10
     scroll = true_scroll.copy()
     scroll[0] = int(scroll[0])
     scroll[1] = int(scroll[1])
     draw = framework.Draw
-    draw.rect(draw, surface, DarkSlateGray, (0, 0, display_manager.width, display_manager.height))
+    draw.rect(draw, surface, color["DarkSlateGray"], (0, 0, display_manager.width, display_manager.height))
     map.map_loader(surface, scroll)
     player_rect, collisions = player_controller.player_motion(player_movement, player_rect, map.tile_rects) # player's collision detection
     player_movement = [0,0]
@@ -89,9 +97,9 @@ while running:
         player_action,player_frame = player_controller.animation_change(player_action,player_frame,'run')
         player_flip = False
     if player_movement[0] == 0:
-        player_action,player_frame = player_controller.animation_change(player_action,player_frame,'idle')
+        player_action, player_frame = player_controller.animation_change(player_action,player_frame,'idle')
     if player_movement[0] < 0:
-        player_action,player_frame = player_controller.animation_change(player_action,player_frame,'run')
+        player_action, player_frame = player_controller.animation_change(player_action,player_frame,'run')
         player_flip = True
     if collisions['bottom']:
         player_y_momentum = 0

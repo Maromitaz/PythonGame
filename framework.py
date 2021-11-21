@@ -55,22 +55,7 @@ class Draw:         #       Start          End
     #     pygame.draw.rect(surface, color, center, radius)
     # def line (self, surface, color, ):
     #     pass
-# Predefined colors, you can define yourself some more in your game's folder by calling the "custom_color" function, working on
-# to make it return a list, so you can add more to one var
-class Color:
-    def custom_color(color_rgb):
-        custom_color = color_rgb
-        return custom_color
-    color = {
-        'RED'       : (255,0,0),
-        'GREEN'     : (0,255,0),
-        'BLUE'      : (0,0,255),
-        'WHITE'     : (255,255,255),
-        'BLACK'     : (0,0,0),
-        'ORANGE'    : (255,125,0),
-        'MAGENDA'   : (255,0,255)
-    }
-# TODO: player loader, player collision player movement
+# Movement and things for the player
 class Move:
     def __init__(self, color_key):
         self.color_key = color_key
