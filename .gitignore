@@ -4,3 +4,4 @@ dist
 main.spec
 Game.spec
 test.py
+discord_rich_presence.txt

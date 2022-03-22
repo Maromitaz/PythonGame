@@ -1,8 +1,11 @@
 import pygame, os, time
 from colorama import Fore as fc
+from pygame.mouse import get_pos
 from pypresence import Presence
 global animation_frames
 animation_frames = {}
+global grass
+grass = []
 # Loads the images given
 def Image_load(image_location, size):
     image_list = []
@@ -136,6 +139,8 @@ class Map:
                     surface.blit(self.tiles[0], (x* self.size-scroll[0] , y* self.size-scroll[1]))
                 if tile == '2':
                     surface.blit(self.tiles[1], (x* self.size-scroll[0] , y* self.size-scroll[1]))
+                    global grass
+                    grass.append((x* self.size-scroll[0] , y* self.size-scroll[1]))
                 if tile == '3':
                     surface.blit(self.tiles[2], (x* self.size-scroll[0] , y* self.size-scroll[1]))
                 if tile == '4':
@@ -158,6 +163,8 @@ class Map:
                     surface.blit(self.tiles[11], (x* self.size-scroll[0] , y* self.size-scroll[1]))
                 if tile == 'd':
                     surface.blit(self.tiles[12], (x* self.size-scroll[0] , y* self.size-scroll[1]))
+                # if tile == 'f':
+                #     surface.blit(self.tiles[13], (x* self.size-scroll[0] , y* self.size-scroll[1]))
                 if tile != '0':
                     self.tile_rects.append(pygame.Rect(x * self.size, y * self.size, self.size, self.size))
                 x += 1
